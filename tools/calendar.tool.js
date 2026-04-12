@@ -28,20 +28,20 @@ async function setCallOutcome(room, outcome) {
 
 export function createCalendarTools(room, callerPhone) {
   return {
-    check_availability: llm.tool({
-      description: 'Check available meeting slots on a given date.',
-      parameters: llm.toJsonSchema({
-        type: 'object',
-        properties: {
-          date: { type: 'string', description: 'ISO format YYYY-MM-DD' },
-        },
-        required: ['date'],
-      }),
-      execute: async ({ date }) => {
-        console.log('[Tool] check_availability', date);
-        return JSON.stringify(await checkAvailability(date));
-      },
-    }),
+    // check_availability: llm.tool({
+    //   description: 'Check available meeting slots on a given date.',
+    //   parameters: llm.toJsonSchema({
+    //     type: 'object',
+    //     properties: {
+    //       date: { type: 'string', description: 'ISO format YYYY-MM-DD' },
+    //     },
+    //     required: ['date'],
+    //   }),
+    //   execute: async ({ date }) => {
+    //     console.log('[Tool] check_availability', date);
+    //     return JSON.stringify(await checkAvailability(date));
+    //   },
+    // }),
 
     book_meeting: llm.tool({
       description: 'Book a meeting with the client. For inbound calls, ask for their name first. For outbound, name is already known.',

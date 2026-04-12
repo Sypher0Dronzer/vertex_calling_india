@@ -58,7 +58,7 @@ function validateFutureDate(date) {
   return null;
 }
 
-// ---- Check availability ----
+// ---- Check availability  this does 12-3 am----
 export async function checkAvailability(dateStr) {
   const date = parseDate(dateStr);
   if (!date)
@@ -78,18 +78,29 @@ export async function checkAvailability(dateStr) {
     timeMax: dayEnd.toISOString(),
     singleEvents: true,
     orderBy: "startTime",
-    timeZone: "Asia/Kolkata",
+    // timeZone: "Asia/Kolkata",
   });
 
   const events = res.data.items ?? [];
 
-  // Generate all 30-min slots for the day
+  // ---- FIX: correct loop end ----
+  const loopEnd = new Date(date);
+  loopEnd.setHours(23, 30, 0, 0); // last slot starts at 11:30pm
+
   const allSlots = [];
   const cur = new Date(dayStart);
-  while (cur <= new Date(date).setHours(23, 30, 0, 0)) {
+  while (cur <= loopEnd) {            // ← compare Date to Date, not Date to number
     allSlots.push(new Date(cur));
     cur.setMinutes(cur.getMinutes() + SLOT_DURATION_MINUTES);
   }
+
+  // Generate all 30-min slots for the day
+  // const allSlots = [];
+  // const cur = new Date(dayStart);
+  // while (cur <= new Date(date).setHours(23, 30, 0, 0)) {
+  //   allSlots.push(new Date(cur));
+  //   cur.setMinutes(cur.getMinutes() + SLOT_DURATION_MINUTES);
+  // }
 
   const now = new Date();
   const freeSlots = allSlots
@@ -122,6 +133,8 @@ export async function checkAvailability(dateStr) {
     message: `Available slots on ${dateStr}: ${readable.join(", ")}`,
   };
 }
+
+
 
 // ---- Book meeting ----
 export async function bookMeeting(dateStr, timeStr, callerName, callerPhone) {
