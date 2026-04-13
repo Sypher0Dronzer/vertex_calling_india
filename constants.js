@@ -3,7 +3,6 @@ export const outBoundOpeningText = `Hello ! This is Simran from Vertex Media. We
 export const agentVoice = 'simran'
 //  Options: aditya, ritu, priya, neha, rahul, pooja, rohan, simran, kavya, amit, dev, ishita, shreya, ratan, varun, manan, sumit, roopa, kabir, aayan, shubh, ashutosh, advait, amelia, sophia, anand, tanya, tarun, sunny, mani, gokul, vijay, shruti, suhani, mohit, kavitha, rehan, soham, rupali
 
-print(response)
 
 export const inBoundOpeningText = `Hello! Thank you for calling Vertex Media. How can I help you today?`;
 
